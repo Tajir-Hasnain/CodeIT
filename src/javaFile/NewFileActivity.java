@@ -3,7 +3,9 @@ package javaFile;
 import javax.swing.JFrame;
 import javax.swing.*;
 
+import java.awt.Color;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class NewFileActivity extends JFrame implements ActionListener {
 	NewFileActivity() {
@@ -14,6 +16,19 @@ public class NewFileActivity extends JFrame implements ActionListener {
 		JButton button = new JButton("Save");
 		button.setBounds(260 ,410,120 ,30);
 		add(button);
+		
+		//Auto Suggester
+		
+		AutoSuggestor suggest = new AutoSuggestor(text,this,null,Color.WHITE,Color.BLUE,Color.RED,0.75f) {
+			@Override
+			boolean wordTyped(String typeWord) {
+				ArrayList<String> words = new ArrayList<>();
+				words.add("map < int , int > ");
+				words.add("vector < int , int > ");
+				setDictionary();
+			}
+		};
+		
 		setLayout(null);
 		setVisible(true);
 	}
