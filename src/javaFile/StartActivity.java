@@ -20,6 +20,8 @@ public class StartActivity extends JFrame implements ActionListener {
 		setLayout(null);
 		setVisible(true);
 	}
+	
+	//Start IndexActivity
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.dispose();
