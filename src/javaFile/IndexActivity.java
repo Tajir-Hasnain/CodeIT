@@ -7,7 +7,7 @@ import java.awt.event.*;
 
 import javax.swing.JFrame;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unused" })
 public class IndexActivity extends JFrame implements ActionListener {
 
 	IndexActivity() {
@@ -17,7 +17,7 @@ public class IndexActivity extends JFrame implements ActionListener {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainframe.dispose();
-				NewFileActivity newfile = new NewFileActivity();
+				Console newfile = new Console();
 				newfile.setVisible(true);
 			}
 		});
@@ -28,5 +28,10 @@ public class IndexActivity extends JFrame implements ActionListener {
 	}
 	public static void main(String[] args) {
 		new IndexActivity();
+	}
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }
