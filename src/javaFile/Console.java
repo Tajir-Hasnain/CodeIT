@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -184,7 +186,7 @@ public class Console extends JFrame implements KeyListener {
 	//Constructor for the class
 	Console() {
 		textArea = new JTextArea();
-		textArea.setSize(300,400);
+		textArea.setSize(1800,900);
 		textArea.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY , 1));
 		
 		textArea.addKeyListener(new KeyListener() {
@@ -234,8 +236,13 @@ public class Console extends JFrame implements KeyListener {
 
 		});
 		
+		
+		JButton button = new JButton("Save");
+		button.setBounds(1600,900,120,40);
+		add(button);
+		
 		add(textArea);
-		setSize(400,500);
+		setSize(2000,1100);
 		setLayout(null);
 		setVisible(true);
 	}
