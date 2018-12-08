@@ -241,6 +241,21 @@ public class Console extends JFrame implements KeyListener {
 		button.setBounds(1600,900,120,40);
 		add(button);
 		
+		JMenuBar menuBar = new JMenuBar();
+		JMenu menu1 = new JMenu("File");
+		
+		JMenuItem m1i1 = new JMenuItem("New");
+		JMenuItem m1i2 = new JMenuItem("Open");
+		JMenuItem m1i3 = new JMenuItem("Close");
+		
+		menu1.add(m1i1);
+		menu1.add(m1i2);
+		menu1.add(m1i3);
+		
+		
+		menuBar.add(menu1);
+		
+		setJMenuBar(menuBar);
 		add(textArea);
 		setSize(2000,1100);
 		setLayout(null);

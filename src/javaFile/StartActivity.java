@@ -11,12 +11,12 @@ public class StartActivity extends JFrame implements ActionListener {
 		JButton button = new JButton("Click");
 		
 		JLabel text = new JLabel("Welcome.Press the Button to start");
-		text.setBounds(100,80,200,20);
-		button.setBounds(130,100,100,40);
+		text.setBounds(870,470,200,20);
+		button.setBounds(900,500,100,40);
 		button.addActionListener(this);
 		add(button);
 		add(text);
-		setSize(400,500);
+		setSize(2000,1100);
 		setLayout(null);
 		setVisible(true);
 	}

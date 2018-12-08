@@ -13,7 +13,7 @@ public class IndexActivity extends JFrame implements ActionListener {
 	IndexActivity() {
 		JFrame mainframe = this;
 		JButton button = new JButton("Add new");
-		button.setBounds(270,350,120,40);
+		button.setBounds(1600,900,120,40);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainframe.dispose();
@@ -22,7 +22,7 @@ public class IndexActivity extends JFrame implements ActionListener {
 			}
 		});
 		add(button);
-		setSize(400,500);
+		setSize(2000,1100);
 		setLayout(null);
 		setVisible(true);
 	}
