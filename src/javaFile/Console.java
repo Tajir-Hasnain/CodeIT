@@ -238,7 +238,7 @@ public class Console extends JFrame implements KeyListener {
 		
 		
 		JButton button = new JButton("Save");
-		button.setBounds(1600,900,120,40);
+		button.setBounds(1600,920,120,40);
 		add(button);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -260,6 +260,7 @@ public class Console extends JFrame implements KeyListener {
 		setSize(2000,1100);
 		setLayout(null);
 		setVisible(true);
+		getContentPane().setBackground(Color.DARK_GRAY);
 	}
 	
 	public static void main(String[] args) {

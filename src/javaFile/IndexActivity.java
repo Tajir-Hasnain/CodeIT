@@ -1,5 +1,6 @@
 package javaFile;
 
+import java.awt.Color;
 import java.awt.GraphicsConfiguration;
 import javax.swing.*;
 import java.awt.HeadlessException;
@@ -22,6 +23,7 @@ public class IndexActivity extends JFrame implements ActionListener {
 			}
 		});
 		add(button);
+		getContentPane().setBackground(Color.DARK_GRAY);
 		setSize(2000,1100);
 		setLayout(null);
 		setVisible(true);
