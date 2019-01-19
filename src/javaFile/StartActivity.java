@@ -1,20 +1,29 @@
 package javaFile;
 
 import java.awt.Color;
+
 import java.awt.event.*;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class StartActivity extends JFrame implements ActionListener {
-	
+	@SuppressWarnings("unused")
+	private JLabel imglabel;
 	//constructor
+	private ImageIcon img1;
 	StartActivity() {
-		JButton button = new JButton("Click");
+		img1 = new ImageIcon(getClass().getResource("notepad3.jpg"));
+		imglabel = new JLabel(img1);
+		imglabel.setBounds(0,0,1400,1051);
+		add(imglabel);
+		
+		JButton button = new JButton("START");
 		
 		JLabel text = new JLabel("<html><font size = 20 , color = 'RED'>Welcome.Press the Button to start</font></html>");
 		text.setBounds(650,350,900,200);
-		button.setBounds(900,500,100,40);
+		button.setBounds(600,500,200,40);
 		button.addActionListener(this);
+		button.setBackground(Color.white);
 		add(button);
 		add(text);
 		JMenuBar menuBar = new JMenuBar();
@@ -33,7 +42,7 @@ public class StartActivity extends JFrame implements ActionListener {
 		
 		setJMenuBar(menuBar);
 		
-		setSize(2000,1100);
+		setBounds(300,50,1400,1051);
 		setLayout(null);
 		setVisible(true);
 		getContentPane().setBackground(Color.DARK_GRAY);
@@ -43,7 +52,8 @@ public class StartActivity extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.dispose();
-		IndexActivity index = new IndexActivity();
+		Interface index = new Interface();
+		index.setSize(2000,1100);
 		index.setVisible(true);
 	}
 	

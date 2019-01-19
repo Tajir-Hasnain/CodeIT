@@ -3,6 +3,7 @@ package javaFile;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,9 +11,19 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.*;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.BadLocationException;
+
+import com.sun.org.slf4j.internal.Logger;
 
 import javaFile.Dictionary;
 
@@ -22,6 +33,8 @@ public class Console extends JFrame implements KeyListener {
 	
 	//Necessary Variables
 	JTextArea textArea;
+	JButton saveButton = new JButton("Save");
+	private Font f;
 	
 	@SuppressWarnings("unused")
 	public class SuggestionPanel {
@@ -127,6 +140,7 @@ public class Console extends JFrame implements KeyListener {
 	//End of SuggestionPanel class;
 	
 	private SuggestionPanel suggestion;
+	private String file;
 	
 	private void hideSuggestion() {
 		if(suggestion != null)
@@ -184,11 +198,12 @@ public class Console extends JFrame implements KeyListener {
 	}
 	
 	//Constructor for the class
-	Console() {
+	public Console() {
 		textArea = new JTextArea();
 		textArea.setSize(1800,900);
 		textArea.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY , 1));
-		
+		f= new Font("Ariell",Font.PLAIN,16);
+		textArea.setFont(f);
 		textArea.addKeyListener(new KeyListener() {
 
 			@Override
@@ -237,9 +252,17 @@ public class Console extends JFrame implements KeyListener {
 		});
 		
 		
-		JButton button = new JButton("Save");
-		button.setBounds(1600,920,120,40);
-		add(button);
+		saveButton.setBounds(1600,920,120,40);
+		saveButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				saveAs();
+			}
+			
+		});
+		add(saveButton);
 		
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menu1 = new JMenu("File");
@@ -252,6 +275,25 @@ public class Console extends JFrame implements KeyListener {
 		menu1.add(m1i2);
 		menu1.add(m1i3);
 		
+		m1i2.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				openFile();
+			}
+			
+		});
+		
+		m1i3.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				textArea.setText("");
+			}
+			
+		});
 		
 		menuBar.add(menu1);
 		
@@ -261,6 +303,174 @@ public class Console extends JFrame implements KeyListener {
 		setLayout(null);
 		setVisible(true);
 		getContentPane().setBackground(Color.DARK_GRAY);
+	}
+	Console(String name, String inst, String prof) {
+		String s = "/*\n*Author : ";
+		s += name;
+		s += '\n';
+		s += "*Institution : ";
+		s += inst;
+		s += '\n';
+		s += "*Profession : ";
+		s += prof;
+		s += "\n*/\n\n";
+		
+		textArea = new JTextArea();
+		textArea.setText(s);
+		textArea.setSize(1800,900);
+		textArea.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY , 1));
+		f= new Font("Ariell",Font.PLAIN,16);
+		textArea.setFont(f);
+		textArea.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+//				System.out.println(arg0.getKeyChar());
+			}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				if(Character.isLetterOrDigit(arg0.getKeyChar())) {
+					System.out.println("Key Released : " + arg0.getKeyChar());
+					CallShowSuggestion();
+				}
+				else if(Character.isWhitespace(arg0.getKeyChar())) 
+					hideSuggestion();
+				else if(arg0.getKeyCode() == KeyEvent.VK_DOWN && suggestion != null)
+					suggestion.moveDown();
+				else if(arg0.getKeyCode() == KeyEvent.VK_UP && suggestion != null)
+					suggestion.moveUp();
+			}
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				if(arg0.getKeyChar() == KeyEvent.VK_ENTER) {
+                    if (suggestion != null) {
+                        if (suggestion.insertSelection()) {
+                            arg0.consume();
+                            final int position = textArea.getCaretPosition();
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        textArea.getDocument().remove(position - 1, 1);
+                                    } catch (BadLocationException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+			}
+
+		});
+		
+		
+		saveButton.setBounds(1600,920,120,40);
+		saveButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				saveAs();
+			}
+			
+		});
+		add(saveButton);
+		
+		JMenuBar menuBar = new JMenuBar();
+		JMenu menu1 = new JMenu("File");
+		
+		JMenuItem m1i1 = new JMenuItem("New");
+		JMenuItem m1i2 = new JMenuItem("Open");
+		JMenuItem m1i3 = new JMenuItem("Close");
+		
+		menu1.add(m1i1);
+		menu1.add(m1i2);
+		menu1.add(m1i3);
+		
+		m1i2.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				openFile();
+			}
+			
+		});
+		
+		m1i3.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				textArea.setText("");
+			}
+			
+		});
+		
+		menuBar.add(menu1);
+		
+		setJMenuBar(menuBar);
+		add(textArea);
+		setSize(2000,1100);
+		setLayout(null);
+		setVisible(true);
+		getContentPane().setBackground(Color.DARK_GRAY);
+		
+	}
+	
+	public void saveAs() {
+	      FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter("C/C++ File", "cpp");
+	      final JFileChooser saveAsFileChooser = new JFileChooser();
+	      saveAsFileChooser.setApproveButtonText("Save");
+	      saveAsFileChooser.setFileFilter(extensionFilter);
+	      int actionDialog = saveAsFileChooser.showOpenDialog(this);
+	      if (actionDialog != JFileChooser.APPROVE_OPTION) {
+	         return;
+	      }
+
+	      // !! File fileName = new File(SaveAs.getSelectedFile() + ".txt");
+	      File file = saveAsFileChooser.getSelectedFile();
+	      if (!file.getName().endsWith(".cpp")) {
+	         file = new File(file.getAbsolutePath() + ".cpp");
+	      }
+
+	      BufferedWriter outFile = null;
+	      try {
+	         outFile = new BufferedWriter(new FileWriter(file));
+
+	         textArea.write(outFile);
+
+	      } catch (IOException ex) {
+	         ex.printStackTrace();
+	      } finally {
+	         if (outFile != null) {
+	            try {
+	               outFile.close();
+	            } catch (IOException e) {}
+	         }
+	      }
+	  }
+	
+	public void openFile() {
+		JFileChooser jf = new JFileChooser();
+	     final JEditorPane document = new JEditorPane();
+	    int returnval=jf.showDialog(this, null);
+	    File file = null;
+	    if(returnval == JFileChooser.APPROVE_OPTION)     
+	     file = jf.getSelectedFile(); 
+	    String str ;
+	    try {
+	        byte bt[]= Files.readAllBytes(file.toPath());   
+	        str=new String(bt,"UTF-8");
+	        textArea.setText(str);
+	    } catch (IOException ex) {
+	    	//
+	    }
 	}
 	
 	public static void main(String[] args) {

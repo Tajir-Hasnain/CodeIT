@@ -12,6 +12,7 @@ public class Dictionary {
 
 		//Libraries
 		data.add("<bits/stdc++.h>");
+		data.add("iostream");
 		
 		//Namespaces
 		data.add("using ");		data.add("namespace ");
@@ -31,7 +32,10 @@ public class Dictionary {
 		data.add("map<int,bool> ");
 		
 		//Vectors
-		data.add("vector<int,int> ");
+		data.add("vector<int> ");
+		data.add("vector < pair < int , int > > ");
+		data.add("vector < long long > ");
+		data.add("vector < string > ");
 		
 		//Sets
 		
@@ -45,5 +49,22 @@ public class Dictionary {
 		data.add("{\n\n}");
 		data.add("()");
 		data.add("[]");
+		
+		//Keywords
+		data.add("return");
+		data.add("make_pair");
+		data.add("static");
+		data.add("iterator");
+		data.add("begin()");
+		data.add("end()");
+		data.add("stack ");
+		data.add("queue ");
+		data.add("set ");
+		data.add("vector ");
+		data.add("fill");
+		data.add("new ");
+		data.add("delete ");
+		data.add("swap");
+		data.add("this");
 	}
 }
